@@ -1,0 +1,147 @@
+---
+title: paste("Individual Report for Patient", directory)
+author: Anish Shah, MD
+output: pdf_document
+params:
+  data: "sample"
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup and script args, global_options, include=FALSE}
+# Start time
+alpha_time <- Sys.time()
+
+# Knitr options
+knitr::opts_chunk$set(
+  cache = TRUE,
+  eval = TRUE,
+  include = FALSE,
+  options("scipen" = 999, "digits = 2")
+)
+
+
+## Script arguments
+
+# Name of folder from command line
+# Will use this for file.path function
+args <- commandArgs(TRUE)
+name <- args[1]
+name <- "UI7616" # Temporary
+
+## Source Libraries
+source("1_libraries.R")
+
+
+## Source Files
+
+# Folder locations
+folder <- file.path(getwd(), "proc_patients", name)
+raw_folder <- file.path(getwd(), "raw_patients")
+
+# Read in the files
+source("2_intake.R") 
+
+## Source Tidying
+source("3_tidy.R")
+
+# End of process
+omega_time <- Sys.time()
+cat("Time to load libraries, intake data, and tidy it...")
+print(omega_time - alpha_time)
+```
+
+## Overview of HRV data
+
+The processed HRV from MATLAB toolbox has created a CSV file with all HRV variables computed. Below is a description:
+
+- Length of recording: `r nrow(rawfile) * increment / 60 / 60` hours
+- Increment window: `r as.numeric(hrvparams[hrvparams$Tab1=="increment",2])`
+- Window length: `r as.numeric(hrvparams[hrvparams$Tab1 == "windowlength", 2])`
+- Data not analyzed: `r as.numeric(removed$PercentNotAnalyzed[1])`%
+
+The data columns are: `r names(df)`
+
+## First Pass Visualization
+
+```{r HRV graphs}
+# Visualize data
+all <-
+  gather(df, key = "hrv", value = "value", -time) %>%
+  ggplot(., aes(x = time, y = value, color = hrv)) +
+  geom_smooth() +
+  scale_x_datetime(date_breaks = "3 hours", date_labels = "%H") +
+  geom_vline(xintercept = cath_time, linetype = 4) +
+  facet_wrap(~hrv, scales = "free_y") +
+  scale_color_viridis(discrete = TRUE) + 
+  theme_minimal() +
+  theme(legend.position = "none") +
+  labs(
+    title = "Heart Rate Variability",
+    x = "Time in Hours",
+    y = "HRV"
+  )
+
+psa <- 
+  gather(df[c("time","HF","LF","VLF","TP","LFHF")], key = "hrv", value = "value", -time) %>%
+  ggplot(., aes(x = time, y = value, color = hrv)) +
+  scale_x_datetime(date_breaks = "1 hour", date_labels = "%H") +
+  geom_vline(xintercept = cath_time, linetype = 4) +
+  geom_smooth() +
+  scale_color_viridis(discrete = TRUE) + 
+  theme_minimal() +
+  labs(
+    title = "Power spectral analysis",
+    x = "Time in Hours",
+    y = "HRV"
+  )
+
+accel <- 
+  gather(df[c("time","AC", "DC")], key = "hrv", value = "value", -time) %>%
+  ggplot(., aes(x = time, y = value, color = hrv)) +
+  scale_x_datetime(date_breaks = "1 hour", date_labels = "%H") +
+  geom_vline(xintercept = cath_time, linetype = 4) +
+  geom_smooth() +
+  scale_color_viridis_d() + 
+  theme_minimal() +
+  labs(
+    title = "Acceleration and Deceleration Capacity",
+    x = "Time in Hours",
+    y = "log(HRV)"
+  )
+
+timeDomain <-
+  gather(df[c("time","SDNN","RMSSD","PNN50")], key = "hrv", value = "value", -time) %>%
+  ggplot(., aes(x = time, y = value, color = hrv)) +
+  scale_x_datetime(date_breaks = "1 hour", date_labels = "%H") +
+  geom_vline(xintercept = cath_time, linetype = 4) +
+  geom_smooth() +
+  scale_color_viridis_d() + 
+  theme_minimal() +
+  labs(
+    title = "Time Domain",
+    x = "Time in Hours",
+    y = "HRV"
+  )
+
+entropy <-
+  gather(df[c("time","SampEn", "ApEn")], key = "hrv", value = "value", -time) %>%
+  ggplot(., aes(x = time, y = value, color = hrv)) +
+  scale_x_datetime(date_breaks = "1 hour", date_labels = "%H") +
+  geom_vline(xintercept = cath_time, linetype = 4) +
+  geom_smooth() +
+  scale_color_viridis_d() + 
+  theme_minimal() +
+  labs(
+    title = "Time Domain",
+    x = "Time in Hours",
+    y = "HRV"
+  )
+  
+# Save the figures
+ggsave(file.path(directory, "all_hrv.png"), plot = all)
+ggsave(file.path(directory, "timeDomain_hrv.png"), plot = timeDomain)
+ggsave(file.path(directory, "entropy_hrv.png"), plot = entropy)
+ggsave(file.path(directory, "psa_hrv.png"), plot = psa)
+ggsave(file.path(directory, "accel_hrv.png"), plot = accel)
+```
