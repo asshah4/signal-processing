@@ -1,0 +1,3 @@
+ID 	peak QRST Angle_deg 	area QRST Angle_deg 	peak QRS Azimuth_deg 	area QRS Azimuth_deg 	peak T Azimuth_deg 	area T Azimuth_deg 	peak SVG Azimuth_deg 	area SVG Azimuth_deg 	peak QRS Elevation_deg 	area QRS Elevation_deg 	peak T Elevation_deg 	area T Elevation_deg 	peak SVG Elevation_deg 	area SVG Elevation_deg 	peak QRS Magnitude_uV 	area QRS_uVms 	peak T Magnitude_uV 	area T_uVms 	peak SVG Magnitude_uV 	QT Interval_ms 	AUC of QTVectorMagnitude_uVms 	Wilson SVG_uVms 	
+ 
+90757 	23.576623 	48.072012 	29.796552 	47.252481 	2.394044 	-7.168557 	24.399604 	23.760121 	40.714924 	44.746182 	53.466689 	65.384303 	42.340532 	49.234404 	1375.809889 	32012.266389 	280.359135 	19225.379893 	1636.612509 	366.000000 	78339.395599 	47083.757985 	
