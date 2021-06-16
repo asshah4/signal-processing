@@ -70,8 +70,8 @@ switch project_name
     % Define new project name and parameters
     case project_name                      % Update with your project name
         HRVparams.Fs = 128;                % Specify sampling frequency
-        HRVparams.readdata = project_name; % (Optional) Specify name for data input folder
-        HRVparams.writedata = project_name;% (Optional) Specify name for data output folder
+        HRVparams.readdata = ['data']; % (Optional) Specify name for data input folder
+        HRVparams.writedata = ['data' filesep 'proc_data'];% (Optional) Specify name for data output folder
         HRVparams.datatype = '';           % (Optional) Specify Data type of input
         HRVparams.ext = '';                % (Optional) Specify file extension of input (e.g., 'mat','qrs')
 
