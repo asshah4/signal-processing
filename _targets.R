@@ -1,23 +1,38 @@
 library(targets)
-# This is an example _targets.R file. Every
-# {targets} pipeline needs one.
-# Use tar_script() to create _targets.R and tar_edit()
-# to open it again for editing.
-# Then, run tar_make() to run the pipeline
-# and tar_read(summary) to view the results.
+library(tarchetypes)
 
-# Define custom functions and other global objects.
-# This is where you write source(\"R/functions.R\")
-# if you keep your functions in external scripts.
-summ <- function(dataset) {
-  summarize(dataset, mean_x = mean(x))
-}
+
+# Functions
+source("biostamp/intake-functions.R")
 
 # Set target-specific options such as packages.
-tar_option_set(packages = "dplyr")
+tar_option_set(
+	packages = c(
+		# Personal
+		"card", "aim",
+		# Tidyverse/models
+		"tidyverse", "tidymodels", "readxl", "haven", "janitor",
+		# Tables / figures
+		"gt", "gtsummary", "labelled",
+		# Stats
+		"lme4", "Hmisc"
+	),
+	error = "workspace"
+)
 
-# End this file with a list of target objects.
-list(
-  tar_target(data, data.frame(x = sample.int(100), y = sample.int(100))),
-  tar_target(summary, summ(data)) # Call your custom functions as needed.
+# Define targets
+targets <- list(
+
+	# Files ====
+	tar_target(
+		biostamp_folder,
+		"../../data/biostamp/proc_data/",
+		format = "file"
+	),
+
+	# Intake ====
+	tar_target(biostamp_data, get_biostamp_data(biostamp_folder)),
+
+	# Report ====
+	tar_render(biostamp_prelim, "biostamp/prelim.Rmd")
 )

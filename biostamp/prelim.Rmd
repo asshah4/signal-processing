@@ -1,0 +1,61 @@
+---
+title: Biostamp HRV Analysis
+author:
+  - Neeti Mehta, PhD\textsuperscript{1}
+  - Anish Shah, MD\textsuperscript{1}
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  xaringan::moon_reader:
+    css: xaringan-themer.css
+    self_contained: false
+    nature:
+      titleSlideClass: [center, middle, inverse]
+      highlightLines: true
+---
+
+```{r setup, echo = FALSE, include = FALSE}
+knitr::opts_chunk$set(
+   fig.retina = 3,
+   warning = FALSE,
+   message = FALSE,
+   echo = FALSE
+)
+
+# Options
+options(digits = 0)
+
+# Targets
+tar_load(biostamp_data)
+```
+
+```{r themer, echo=FALSE, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_duo_accent(primary_color = "#0C2340", secondary_color = "#F2A900")
+```
+
+class: center, middle, inverse
+# Summary
+
+---
+
+```{r, status}
+biostamp_data$status %>%
+	gt() %>%
+	tab_header(
+		title = "Summary of Files Analyzed"
+	) %>%
+	tab_options(
+		table.font.size = "smaller"
+	) #%>%
+	as_raw_html()
+```
+
+---
+
+```{r}
+biostamp_data$analyzed %>%
+	group_by(patid) %>%
+	summarise(across(c(n_nmean, sdnn:pnn50, ulf:ttlpwr, ac:ap_en), ~ mean(.x, na.rm = TRUE)))
+
+```
+
