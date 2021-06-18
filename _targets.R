@@ -24,11 +24,7 @@ tar_option_set(
 targets <- list(
 
 	# Files ====
-	tar_target(
-		biostamp_folder,
-		"../../data/biostamp/proc_data/",
-		format = "file"
-	),
+	tar_file(biostamp_folder, "../../data/biostamp/proc_data/"),
 
 	# Intake ====
 	tar_target(biostamp_data, get_biostamp_data(biostamp_folder)),

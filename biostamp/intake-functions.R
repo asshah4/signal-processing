@@ -21,13 +21,12 @@ get_biostamp_data <- function(folder) {
 	status <- list.files(
 		path = folder,
 		recursive = TRUE,
-		full.names = FALSE,
-		pattern = ".txt"
+		full.names = TRUE,
+		pattern = "Removed.*.csv"
 	) %>%
-		str_split(., pattern = "\\/", simplify = TRUE) %>%
-		as_tibble() %>%
-		rename(patid = V1, status = V2) %>%
-		mutate(status = gsub(pattern = "\\.txt$", "", status))
+		map_dfr(., read_csv) %>%
+		clean_names() %>%
+		rename(patid = pat_id)
 
 	# Return
 	biostamp_data <- list(

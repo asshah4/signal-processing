@@ -40,13 +40,14 @@ class: center, middle, inverse
 
 ```{r, status}
 biostamp_data$status %>%
+	select(-contains("af")) %>%
 	gt() %>%
 	tab_header(
 		title = "Summary of Files Analyzed"
 	) %>%
 	tab_options(
 		table.font.size = "smaller"
-	) #%>%
+	) %>%
 	as_raw_html()
 ```
 
@@ -55,7 +56,15 @@ biostamp_data$status %>%
 ```{r}
 biostamp_data$analyzed %>%
 	group_by(patid) %>%
-	summarise(across(c(n_nmean, sdnn:pnn50, ulf:ttlpwr, ac:ap_en), ~ mean(.x, na.rm = TRUE)))
-
+	summarise(across(c(n_nmean, sdnn:pnn50, ulf:ttlpwr, ac:ap_en), ~ mean(.x, na.rm = TRUE))) %>%
+	select(-c(ac, dc, samp_en)) %>%
+	gt() %>%
+	tab_header(title = "HRV Summary") %>%
+	tab_options(table.font.size = "smaller") %>%
+	fmt_number(
+	  columns = c(n_nmean:ap_en),
+	  drop_trailing_zeros = TRUE, 
+	  decimals = 1
+	)  
 ```
 
