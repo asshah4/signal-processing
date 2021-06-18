@@ -1,6 +1,8 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|iteration|parent|children|seconds|warnings|error
-biostamp_data|stem|8c0e3f261a008c45|06473dca8dd30a2b|7819911e0ba50de7|-312422714||t18796.0868736614s|e6e1d370b5976d56|6021656|rds|vector|||5.101|21780 parsing failures. row     col           expected actual|
+biostamp_data|stem|098f74832f8aa9e6|06473dca8dd30a2b|738da481df72493f|-312422714||t18796.481284715s|d0b3a8b1648069b9|6037534|rds|vector|||2.032|21780 parsing failures. row     col           expected actual|
 get_biostamp_data|function|0fcf7341f0d4c2c6||||||||||||||
-targets|object|a011ff1f5bb9f8e4||||||||||||||
-biostamp_folder|stem|800283111610abb2|9a513b8720345f86|ef46db3751d8e999|-769950403|../../data/biostamp/proc_data/|t18795.5487668857s|495b46c240e9807d|480|file|vector|||3.261||
-biostamp_prelim|stem|1169e16dcfd67246|6825a93dc9ba2766|72cb5608a9b4b1b9|-1142023541|biostamp/prelim.html*biostamp/prelim.Rmd*biostamp/prelim_files|t18796.0900339989s|6ca7c5d885b443f4|54675|file|vector|||5.155||
+write_biostamp_data|function|0a87543a77f907f9||||||||||||||
+targets|object|d4dd9f2c474c9c7f||||||||||||||
+biostamp_folder|stem|e057a70c9136ef8a|9a513b8720345f86|ef46db3751d8e999|-769950403|../../data/biostamp/proc_data/|t18796.4760115388s|f73cea00d22be8c9|512|file|vector|||3.434||
+biostamp_prelim|stem|115495d756701573|6825a93dc9ba2766|b33e510e4c1cc782|-1142023541|biostamp/prelim.html*biostamp/prelim.Rmd*biostamp/prelim_files|t18796.4813032331s|a585293d02be0a2d|56940|file|vector|||1.596||
+biostamp_proc|stem|32600f579ec674b6|c56064f414648794|49b92be082d6290f|-331911851||t18796.481529311s|8619def19bb20a44|79|rds|vector|||3.88||

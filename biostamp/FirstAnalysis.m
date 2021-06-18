@@ -46,7 +46,7 @@ plotting = 0;
 
 % Data intake
 files = dir(fullfile(raw_data, '*.csv'));
-i = 1;
+i = 3;
 filename = regexprep(files(i).name, '.csv', '');
 mkdir(proc_data, filename);
 

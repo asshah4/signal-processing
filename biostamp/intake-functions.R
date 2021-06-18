@@ -36,3 +36,13 @@ get_biostamp_data <- function(folder) {
 
 }
 
+# Write files
+write_biostamp_data <- function(biostamp_data) {
+
+	biostamp_data$analyzed %>%
+		write_csv(., "./biostamp/summary_data.csv")
+
+	# Return
+	return("./biostamp/summary_data.csv")
+
+}

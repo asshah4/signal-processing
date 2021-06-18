@@ -23,12 +23,10 @@ tar_option_set(
 # Define targets
 targets <- list(
 
-	# Files ====
+	# Biostamp ====
 	tar_file(biostamp_folder, "../../data/biostamp/proc_data/"),
-
-	# Intake ====
 	tar_target(biostamp_data, get_biostamp_data(biostamp_folder)),
+	tar_render(biostamp_prelim, "biostamp/prelim.Rmd"),
+	tar_target(biostamp_proc, write_biostamp_data(biostamp_data))
 
-	# Report ====
-	tar_render(biostamp_prelim, "biostamp/prelim.Rmd")
 )
